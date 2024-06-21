@@ -18,14 +18,14 @@ public class MainScheduler {
     private final Scheduler scheduler;
     private final CommonUtils commonUtils;
 
-    @PostConstruct
-    public void startSchedule(){
-        try {
-            scheduler.start();
-        } catch (SchedulerException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    @PostConstruct
+//    public void startSchedule(){
+//        try {
+//            scheduler.start();
+//        } catch (SchedulerException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public void scheduleJob(Class className, TriggerInfo info){
         try {
@@ -38,12 +38,24 @@ public class MainScheduler {
         }
     }
 
-    @PreDestroy
-    public void closeScheduler(){
+    // schedule by cron expression
+    public void scheduleJob(Class className, String cronExp){
+
         try {
-            scheduler.shutdown();
+            JobDetail jobDetail = commonUtils.getJobDetail(className);
+            Trigger triggerDetail = commonUtils.getTriggerByCronExpression(className,cronExp);
+            scheduler.scheduleJob(jobDetail,triggerDetail);
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }
     }
+
+//    @PreDestroy
+//    public void closeScheduler(){
+//        try {
+//            scheduler.shutdown();
+//        } catch (SchedulerException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }

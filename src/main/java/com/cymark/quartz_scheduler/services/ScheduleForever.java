@@ -15,11 +15,17 @@ public class ScheduleForever {
     private final MainScheduler scheduler;
     private final CommonUtils commonUtils;
 
+    // running forever
     @PostConstruct
     public void init(){
-
         TriggerInfo info = commonUtils.getTriggerInfo(3,true, 1000L, 1000L, "Success");
         scheduler.scheduleJob(FirstJob.class, info);
+    }
+
+    // running based on cron expression
+    @PostConstruct
+    public void init1(){
+        scheduler.scheduleJob(FirstJob.class, "0/2 * * * * ?");
     }
 
 

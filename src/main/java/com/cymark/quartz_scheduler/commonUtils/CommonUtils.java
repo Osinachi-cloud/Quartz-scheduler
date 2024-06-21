@@ -16,7 +16,19 @@ public class CommonUtils {
 
         return JobBuilder.newJob(className)
                 .withIdentity(className.getSimpleName(), "group")
+                // in case you need to store in db
+                .storeDurably(true)
+                .requestRecovery(true)
+                // ends here
                 .setJobData(jobData)
+                .build();
+    }
+
+    // for cron expression
+    public JobDetail getJobDetail(Class className){
+        return JobBuilder.newJob(className)
+                .withIdentity(className.getSimpleName(), "group1")
+//                .storeDurably(false)
                 .build();
     }
 
@@ -37,6 +49,15 @@ public class CommonUtils {
                 // starts from when the app starts and the initial offset time passed
                 .startAt(new Date(System.currentTimeMillis() + info.getInitialOffSet()))
                 .withSchedule(scheduler)
+                .build();
+    }
+
+    // for cron expression
+    public Trigger getTriggerByCronExpression(Class className,String expression){
+        return TriggerBuilder
+                .newTrigger()
+                .withIdentity(className.getSimpleName())
+                .withSchedule(CronScheduleBuilder.cronSchedule(expression))
                 .build();
     }
 

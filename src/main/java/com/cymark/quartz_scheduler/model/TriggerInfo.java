@@ -6,11 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class TriggerInfo {
+public class TriggerInfo implements Serializable {
     // how many times you want to trigger that job
     private int triggerCount;
 

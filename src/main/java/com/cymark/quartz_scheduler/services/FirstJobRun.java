@@ -15,12 +15,12 @@ public class FirstJobRun {
     private final MainScheduler scheduler;
     private final CommonUtils commonUtils;
 
-    @PostConstruct
-    public void init(){
-
-        TriggerInfo info = commonUtils.getTriggerInfo(3,false, 1000L, 1000L, "Success");
-        scheduler.scheduleJob(FirstJob.class, info);
-    }
+//    @PostConstruct
+//    public void init(){
+//
+//        TriggerInfo info = commonUtils.getTriggerInfo(3,false, 1000L, 1000L, "Success");
+//        scheduler.scheduleJob(FirstJob.class, info);
+//    }
 
 
 }
